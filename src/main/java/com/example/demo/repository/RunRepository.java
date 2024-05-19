@@ -35,9 +35,35 @@ public class RunRepository {
                 .optional();
     }
 
+    public void createTable(String tableName){
+        jdbcClient.sql("create table if not exists " + tableName +"(" + " id\n" +
+                "    INT\n" +
+                "    not\n" +
+                "    null,\n" +
+                "    title\n" +
+                "    varchar\n" +
+                "(\n" +
+                "    30\n" +
+                ") not null,\n" +
+                "    started_on timestamp not null,\n" +
+                "    completed_time timestamp not null,\n" +
+                "    miles int not null,\n" +
+                "    location varchar\n" +
+                "(\n" +
+                "    30\n" +
+                ") not null,\n" +
+                "    PRIMARY KEY\n" +
+                "(\n" +
+                "    id\n" +
+                ")\n" +
+                "    );\n" +
+                "\n");
+
+    }
+
     //don't forget 's' on param method to has many values
      public void createRun(run run){
-       var updated = jdbcClient.sql("insert into Run values(?,?,?,?,?,?)")
+       var updated = jdbcClient.sql("insert into postgres values(?,?,?,?,?,?)")
                 .params(List.of(run.id(), run.title(), run.startedOn(), run.completedOn(), run.miles(), run.location().toString()))
                 .update();
        Assert.state(updated == 0, "Run already exists");
@@ -59,6 +85,8 @@ public class RunRepository {
     }
 
     public int countRuns(){
+        System.out.println("countRuns");
+        createTable("Run");
         return jdbcClient.sql("select * from Run")
                 .query()
                 .listOfRows().size();
