@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 //that component be said to spring that awared of
-@Component
+//@Component
 public class RunJsonLoader implements CommandLineRunner {
 
     private static final Logger logger = Logger.getLogger(RunJsonLoader.class.getName());
