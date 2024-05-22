@@ -12,6 +12,7 @@ public class UserRestClient {
     public UserRestClient(RestClient.Builder restClient) {
         this.restClient = restClient
                 .baseUrl("https://jsonplaceholder.typicode.com")
+                .defaultHeader("Accept", "application/json")
                 .build();
     }
 
